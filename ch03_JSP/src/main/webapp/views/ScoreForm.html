@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>[실습]성적 처리</title>
+<script type="text/javascript">
+	//0~100 사이 입력
+	//숫자만 입력
+	window.onload = function(){
+		const myForm = document.getElementById('myForm');
+		myForm.onsubmit = function(){
+			//반복문을 이용한 유효성 체크
+			const items = document.querySelectorAll('input[type="number"]');
+			
+			for(let i=0;i<items.length;i++){
+				const label = document.querySelector('label[for="'+items[i].id+'"]');
+				                                                 //Q. this = myForm?
+				const label_text = label.textContent;
+				if(items[i].value.trim() == ''){					
+					alert(label_text+' 점수 필수 입력');
+					items[i].value = '';
+					items[i].focus();
+					return false;
+				}
+				if(isNaN(items[i].value)){
+					alert(label_text+' 점수는 숫자로 입력');
+					items[i].value = '';
+					items[i].focus();
+					return false;
+				}
+				if(items[i].value < 0 || items[i].value > 100){
+					alert(label_text+'점수를 0이상 100이하로 입력하세요.');
+					items[i].value='';
+					items[i].focus();
+					return false;
+				}
+			}
+		};
+		/*
+		const myForm = document.getElementById('myForm');
+		let korean = document.getElementById('korean');
+		let english = document.getElementById('english');
+		let math = document.getElementById('math');
+
+		myForm.onsubmit = function(){
+			if(!check(korean) || !check(english) || !check(math)){				
+				return false;
+			}
+			function check(score){
+				if(score.value.trim() == ''){
+					alert('점수 필수 입력');
+					score.value='';
+					score.focus();
+					return false;
+				}
+				
+				if(isNaN(score.value)){
+					alert('숫자만 입력 가능합니다.');
+					score.value='';
+					score.focus();
+					return false;
+				}
+				
+				if(score.value < 0 || score.value > 100){
+					alert('점수는 0이상 100이하로 입력하세요.');
+					score.value='';
+					score.focus();
+					return false;
+				}
+				return true;
+			}	
+		};
+		*/
+	};
+		
+		
+			
+	
+</script>
+</head>
+<body>
+<form id="myForm" action="/ch03_JSP/score" method="post">
+	<ul>
+		<li>
+			<label for="korean">국어</label>
+			<input type="number" name="korean" id="korean">
+		</li>
+		<li>
+			<label for="english">영어</label>
+			<input type="number" name="english" id="english">
+		</li>
+		<li>
+			<label for="math">수학</label>
+			<input type="number" name="math" id="math">
+		</li>
+	</ul>
+	<input type="submit" value="전송">
+</form>
+</body>
+</html>
